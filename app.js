@@ -1,23 +1,21 @@
-const express = require('express')
-const mongoose = require('mongoose');
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const connect = require('./schemas/index')
 
-const app = express()
+const app = express();
+const router = require('./routes');
 
-const cookieParser = require('cookie-parser')
-const postRouter = require('./routes/posts');
-const commentRouter = require('./routes/comments');
-const userRouter = require('./routes/users');
+require('dotenv').config();
 
-// mongoose.connect("mongodb+srv://id:pw@cluster0.3tc0dmy.mongodb.net/sign?retryWrites=true")
-mongoose.connect("mongodb://127.0.0.1:27017/hs_users")
-const db = mongoose.connection
-db.on("error", err => console.log(err));
-db.once('open', () => console.log("db connected!"))
+connect();
 
 app.use(express.json());
 app.use(cookieParser());
-app.use('/posts', postRouter);
-app.use('/comments', commentRouter);
-app.use('/', userRouter);
 
-app.listen(3000, () => {console.log('서버가 열렸어요!');});
+app.use('/', router)
+
+app.listen(process.env.PORT, () => {
+  console.log('포트로 서버가 열렸어요!');
+});
+
+module.exports = router;

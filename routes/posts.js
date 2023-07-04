@@ -4,9 +4,10 @@ const Post = require('../schemas/post');
 const authMiddleware = require('../middlewares/auth-middleware');
 
 // 전체 게시글 조회 API
-router.get('/', async (req, res) => {
+router.get('/', async (_, res) => {
   try {
     const posts = await Post.find().select('-content').sort().exec();
+    console.log(posts)
     const data = posts.map((post) => {
       return {
         postId: post._id,
