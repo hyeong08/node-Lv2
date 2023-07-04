@@ -106,7 +106,7 @@ router.delete('/:commentId', authMiddleware, async (req, res) => {
     await Comment.deleteOne({ _id: commentId });
     res.json({ message: '댓글을 삭제하였습니다.' });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: '댓글 삭제에 실패하였습니다.' });
   }
 });
 
