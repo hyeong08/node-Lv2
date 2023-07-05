@@ -7,7 +7,6 @@ const authMiddleware = require('../middlewares/auth-middleware');
 router.get('/', async (_, res) => {
   try {
     const posts = await Post.find().select('-content').sort().exec();
-    console.log(posts)
     const data = posts.map((post) => {
       return {
         postId: post._id,
@@ -60,9 +59,7 @@ router.put('/:postId', authMiddleware, async (req, res) => {
   const post = await Post.findById({ _id: postId });
   try {
     if (userId !== post.userId) {
-      return res
-        .status(403)
-        .json({ errorMessage: '게시글 수정의 권한이 존재하지 않습니다.' });
+      return res.status(403).json({ errorMessage: '게시글 수정의 권한이 존재하지 않습니다.' });
     }
     await Post.updateOne({ _id: postId }, { $set: { title, content } });
     res.json({ message: '게시글을 수정하였습니다.' });
@@ -83,9 +80,7 @@ router.delete('/:postId', authMiddleware, async (req, res) => {
   }
   try {
     if (userId !== post.userId) {
-      return res
-        .status(403)
-        .json({ errorMessage: '게시글 수정의 권한이 존재하지 않습니다.' });
+      return res.status(403).json({ errorMessage: '게시글 수정의 권한이 존재하지 않습니다.' });
     }
     await Post.deleteOne({ _id: postId });
     res.json({ messgae: '게시글을 삭제하였습니다.' });

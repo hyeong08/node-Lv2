@@ -10,10 +10,7 @@ router.post('/signup', async (req, res) => {
   // 닉네임은 최소 3자 이상, 알파벳 대소문자(a~z, A~Z), 숫자(0~9)로 구성
   const nickCheck = /(?=.*\d)(?=.*[a-zA-Z])/;
   if (nickname.length < 3 || !nickCheck.test(nickname)) {
-    res.status(400).send({
-      errorMessage:
-        '닉네임은 최소 3자 이상, 알파벳 대소문자, 숫자로 구성해야 합니다.',
-    });
+    res.status(400).send({errorMessage:'닉네임은 최소 3자 이상, 알파벳 대소문자, 숫자로 구성해야 합니다.'});
     return;
   }
 

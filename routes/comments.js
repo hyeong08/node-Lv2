@@ -11,9 +11,7 @@ router.get('/:postId', async (req, res) => {
   const post = await Post.findOne({ _id: postId });
   try {
     if (!post)
-      return res
-        .status(404)
-        .json({ errorMessage: '게시글이 존재하지 않습니다.' });
+      return res.status(404).json({ errorMessage: '게시글이 존재하지 않습니다.' });
 
     const data = comments.map((comment) => {
       return {
@@ -42,9 +40,7 @@ router.post('/:postId', authMiddleware, async (req, res) => {
   const post = await Post.findOne({ _id: postId });
 
   if (!post)
-    return res
-      .status(403)
-      .json({ errorMessage: '게시글이 존재하지 않습니다.' });
+    return res.status(403).json({ errorMessage: '게시글이 존재하지 않습니다.' });
 
   try {
     await Comment.create({
@@ -93,9 +89,7 @@ router.delete('/:commentId', authMiddleware, async (req, res) => {
   const comment = await Comment.findOne({ _id: commentId });
 
   if (userId !== comment.userId) {
-    return res
-      .status(403)
-      .json({ errorMessage: '댓글 삭제 권한이 존재하지 않습니다.' });
+    return res.status(403).json({ errorMessage: '댓글 삭제 권한이 존재하지 않습니다.' });
   }
 
   if (!comment) {
