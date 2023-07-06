@@ -25,6 +25,7 @@ router.get('/', async (_, res) => {
 router.post('/', authMiddleware, async (req, res) => {
   const { title, content } = req.body;
   const { userId, nickname } = res.locals.user;
+  console.log(userId,nickname)
   try {
     await Post.create({ userId, nickname, title, content });
     res.json({ message: '게시글을 생성하였습니다.' });
