@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
+require('dotenv').config();
 const User = require('../schemas/user');
 const jwt = require('jsonwebtoken')
-require('dotenv').config();
+
 
 // 회원가입 API
 router.post('/signup', async (req, res) => {
@@ -47,7 +48,7 @@ router.post('/login', async (req, res) => {
 			res.status(400).json({ errorMessage: '닉네임 또는 패스워드가 잘못됐습니다.' });
     }
 
-    const token = jwt.sign({ userId: user.userId }, 'customized-secret-key');
+    const token = jwt.sign({ userId: user.userId },process.env.SECRET_KEY);
     res.cookie('Authorization', `Bearer ${token}`);
     res.status(200).json({ message: '로그인 성공' });
   } catch (err) {

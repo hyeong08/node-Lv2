@@ -11,7 +11,7 @@ module.exports = async (req, res, next) => {
   }
 
   try {
-    const { userId } = jwt.verify(authToken,"customized-secret-key");
+    const { userId } = jwt.verify(authToken, process.env.SECRET_KEY);
     const user = await User.findById(userId);
     res.locals.user = user;
     next();
