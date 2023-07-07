@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../schemas/user');
 const jwt = require('jsonwebtoken')
+require('dotenv').config();
 
 // 회원가입 API
 router.post('/signup', async (req, res) => {
